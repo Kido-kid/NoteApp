@@ -1,0 +1,8 @@
+{
+  "routes": {
+    "/NoteApp": {},
+    "/NoteApp/login": {},
+    "/NoteApp/notes": {},
+    "/NoteApp/signup": {}
+  }
+}
