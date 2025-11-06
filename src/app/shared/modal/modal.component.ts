@@ -1,7 +1,4 @@
-import {
-  Component, Input, Output, EventEmitter,
-  Inject, PLATFORM_ID, OnDestroy
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter,Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -11,6 +8,7 @@ import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
   styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnDestroy {
+  
   @Input() title = '';
   @Input() message = '';
   @Input() visible = false;

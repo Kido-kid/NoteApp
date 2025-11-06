@@ -10,14 +10,18 @@ import { CommonModule, NgIf } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
+  //Initializing Credential Variables
   identifier = '';
   password = '';
+
   loginError = false;
   showPassword = false;
 
 
   constructor(private router: Router) {}
 
+  //Getting User Details from Local storage
   private getStoredUsers(): any[] {
     try {
       return JSON.parse(localStorage.getItem('users') || '[]') as any[];
@@ -26,6 +30,7 @@ export class LoginComponent {
     }
   }
 
+  //Utility For Navigation btwn Fields
   goNext(nextField: HTMLInputElement, event: Event) {
     event.preventDefault();
     setTimeout(() => nextField.focus(), 0);
@@ -39,17 +44,18 @@ export class LoginComponent {
     this.onLogin(form);
   }
 
+
    togglePasswordVisibility(e: Event) {
-    e.preventDefault(); // prevent form submit
+    e.preventDefault(); 
     e.stopPropagation();
     this.showPassword = !this.showPassword;
   }
 
   keepFocus(e: MouseEvent) {
-    // prevents losing caret/focus on mousedown
     e.preventDefault();
   }
 
+  //Submitting Form
   onLogin(form: NgForm) {
     this.loginError = false;
 
@@ -77,21 +83,14 @@ export class LoginComponent {
       return;
     }
 
-    // success
+    // success-Setting details in Local Storage
     localStorage.setItem('currentUser', JSON.stringify({ username: user.username, email: user.email }));
-    console.log('Setting justLoggedIn...');
-localStorage.setItem('justLoggedIn', 'true');
-console.log('justLoggedIn:', localStorage.getItem('justLoggedIn'));
+    localStorage.setItem('justLoggedIn', 'true');
 
-
-
-  
-    alert('Login successful!');
-   
-
+    //Resetting Form
     form.resetForm();
 
-    // navigate to notes page (adjust route if your notes page differs)
+    // navigate to notes page 
     this.router.navigate(['/notes']);
   }
 }

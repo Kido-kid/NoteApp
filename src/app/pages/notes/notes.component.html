@@ -1,6 +1,3 @@
-
-
-
 <div class="notes-container">
 
   <!-- SUCCESS BANNER -->
@@ -58,7 +55,6 @@
   <h2 *ngIf="editingId">Edit Note</h2>
 
   <div class="composer-box">
-    <!-- Voice toolbar (English only) -->
     <div class="composer-toolbar">
       <div class="voice-controls">
         <button type="button"
@@ -141,4 +137,38 @@
       <p>No notes match your filters.</p>
     </div>
   </ng-template>
+
+
+
+  <!-- UPDATE CONFIRM MODAL -->
+<app-modal
+  #confirmUpdate
+  [title]="'Update Note?'"
+  [message]="'Do you want to update this note?'"
+  [variant]="'confirm'"
+  [secondaryText]="'Cancel'"
+  [primaryText]="'Update'"
+  (secondary)="confirmUpdate.close()"
+  (primary)="confirmUpdateNow()">
+</app-modal>
+
+<!-- DELETE CONFIRM MODAL -->
+<app-modal
+  #confirmDelete
+  [title]="'Delete Note?'"
+  [message]="'This action cannot be undone.'"
+  [variant]="'confirm'"
+  [secondaryText]="'Cancel'"
+  [primaryText]="'Delete'"
+  [destructive]="true"
+  (secondary)="confirmDelete.close()"
+  (primary)="confirmDeleteNow()">
+</app-modal>
+
+<!-- SUCCESS TOAST (shared for update/delete) -->
+<div class="toast-banner" *ngIf="showToast">
+  <i class="bi bi-check-circle-fill"></i>
+  <span>{{ toastMessage }}</span>
+</div>
+
 </div>

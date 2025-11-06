@@ -42,13 +42,14 @@
           (input)="onEmailInput()"
           (keydown.enter)="goNext(passwordInput, $event)"
           required
+          email
           autocomplete="off"
         />
       </div>
 
       <p class="error" *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)">
         <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
-        <span *ngIf="emailCtrl.errors?.['email']">Enter a valid email.</span>
+        <span *ngIf="emailCtrl.errors?.['email'] ">Enter a valid email.</span>
       </p>
       <p class="error" *ngIf="emailExists">An account with this email already exists.</p>
 
