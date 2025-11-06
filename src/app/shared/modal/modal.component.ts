@@ -8,7 +8,6 @@ import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
   styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnDestroy {
-  
   @Input() title = '';
   @Input() message = '';
   @Input() visible = false;
