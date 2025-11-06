@@ -1,0 +1,142 @@
+/* === BACKDROP === */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.35); /* translucent dark overlay */
+  backdrop-filter: blur(2px);
+  display: grid;
+  place-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* === MODAL WINDOW === */
+.modal-window {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.25s ease-out;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* === HEADER === */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.btn-close {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: #64748b;
+  transition: color 0.2s;
+}
+.btn-close:hover {
+  color: #0f172a;
+}
+
+/* === BODY === */
+.modal-body {
+  padding: 16px 18px;
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.countdown {
+  margin-top: 10px;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* === FOOTER === */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 18px;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* === BUTTONS === */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Primary */
+.btn {
+  background: linear-gradient(135deg, #4b6cb7, #182848);
+  color: #fff;
+}
+.btn:hover {
+  background: linear-gradient(135deg, #405b99, #1a224a);
+}
+
+/* Outline / Secondary */
+.btn.outline {
+  background: transparent;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+.btn.outline:hover {
+  background: #f1f5f9;
+}
+
+/* Destructive */
+.btn.danger {
+  background: #ef4444;
+}
+.btn.danger:hover {
+  background: #dc2626;
+}
+
+/* === VARIANT COLORS === */
+.modal-window.success .modal-header {
+  background: #ecfdf5;
+  color: #065f46;
+  border-bottom: 1px solid #d1fae5;
+}
+.modal-window.error .modal-header {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-bottom: 1px solid #fee2e2;
+}
+.modal-window.confirm .modal-header {
+  background: #fff7ed;
+  color: #92400e;
+  border-bottom: 1px solid #ffedd5;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

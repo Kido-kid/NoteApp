@@ -1,0 +1,19 @@
+<div class="modal-backdrop" *ngIf="visible" (mousedown)="onBackdropClick($event)">
+  <div class="modal-window" [ngClass]="variant" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ title }}</h5>
+      <button *ngIf="showCloseButton" type="button" class="btn-close" (click)="close()"></button>
+    </div>
+
+    <div class="modal-body">
+      <p *ngIf="message">{{ message }}</p>
+      <p *ngIf="countdownFrom && countdown > 0" class="countdown">Redirecting in {{ countdown }}…</p>
+      <ng-content></ng-content>
+    </div>
+
+    <div class="modal-footer" *ngIf="variant === 'confirm' || !autoCloseAfter">
+      <button *ngIf="secondaryText" class="btn outline" (click)="onSecondary()">{{ secondaryText }}</button>
+      <button class="btn" [class.danger]="destructive" (click)="onPrimary()">{{ primaryText }}</button>
+    </div>
+  </div>
+</div>

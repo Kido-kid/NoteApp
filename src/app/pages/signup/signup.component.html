@@ -1,0 +1,117 @@
+<div class="signup-container">
+  <h1 class="app-title">NoteApp</h1>
+
+  <div class="signup-box">
+    <h2>Create Account</h2>
+
+    <form (ngSubmit)="onSignup(signupForm)" #signupForm="ngForm" novalidate>
+
+      <!-- USERNAME -->
+      <div class="input-group">
+        <i class="bi bi-person input-icon"></i>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          [(ngModel)]="username"
+          #usernameCtrl="ngModel"
+          (input)="onUsernameInput()"
+          (keydown.enter)="goNext(emailInput, $event)"
+          required
+          minlength="3"
+          autocomplete="off"
+        />
+      </div>
+
+      <p class="error" *ngIf="usernameCtrl.invalid && (usernameCtrl.dirty || usernameCtrl.touched)">
+        <span *ngIf="usernameCtrl.errors?.['required']">Username is required.</span>
+        <span *ngIf="usernameCtrl.errors?.['minlength']">Minimum 3 characters.</span>
+      </p>
+      <p class="error" *ngIf="usernameExists">Username already taken.</p>
+
+      <!-- EMAIL -->
+      <div class="input-group">
+        <i class="bi bi-envelope input-icon"></i>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+          #emailCtrl="ngModel"
+          #emailInput
+          (input)="onEmailInput()"
+          (keydown.enter)="goNext(passwordInput, $event)"
+          required
+          autocomplete="off"
+        />
+      </div>
+
+      <p class="error" *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)">
+        <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
+        <span *ngIf="emailCtrl.errors?.['email']">Enter a valid email.</span>
+      </p>
+      <p class="error" *ngIf="emailExists">An account with this email already exists.</p>
+
+      <!-- PASSWORD -->
+      <div class="input-group">
+        <i class="bi bi-lock input-icon"></i>
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+          #passwordCtrl="ngModel"
+          #passwordInput
+          (keydown.enter)="onEnterPassword(signupForm)"
+          required
+          minlength="4"
+        />
+      </div>
+
+      <p class="error" *ngIf="passwordCtrl.invalid && (passwordCtrl.dirty || passwordCtrl.touched)">
+        <span *ngIf="passwordCtrl.errors?.['required']">Password is required.</span>
+        <span *ngIf="passwordCtrl.errors?.['minlength']">Minimum 4 characters.</span>
+      </p>
+
+      <button
+        class="btn"
+        type="submit"
+        [disabled]="signupForm.invalid || usernameExists || emailExists"
+      >
+        Sign Up
+      </button>
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+  </div>
+
+
+
+<app-modal
+  #signupSuccess
+  [title]="'Signup Successful'"
+  [message]="'Your account has been created.Redirecting to Login Page'"
+  [variant]="'success'"
+  [countdownFrom]="3"
+  (countdownComplete)="goToLogin()"
+  (primary)="goToLogin()">
+</app-modal>
+
+<app-modal
+  #signupFail
+  [title]="'Signup Failed'"
+  [message]="'Something went wrong. Try again.'"
+  [variant]="'error'"
+  [primaryText]="'Reload Page'"
+  
+  (primary)="reloadPage()">
+</app-modal>
+
+
+
+</div>
+
+

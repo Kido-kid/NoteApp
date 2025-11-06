@@ -1,0 +1,144 @@
+
+
+
+<div class="notes-container">
+
+  <!-- SUCCESS BANNER -->
+<div class="login-success-banner" *ngIf="showLoginBanner">
+  <i class="bi bi-check-circle-fill"></i>
+  <span>Successfully Logged In</span>
+</div>
+
+  <header class="notes-header">
+    <h1 class="app-title">NoteApp</h1>
+    <div class="user-actions">
+      <span class="hello" *ngIf="currentUser?.username">Hi, {{ currentUser?.username }}</span>
+      <button class="btn outline" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- Controls -->
+  <section class="controls">
+    <div class="search-wrap">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        placeholder="Search notes..."
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()"
+        #searchInput
+      />
+      <button class="btn ghost" type="button" (click)="clearSearch()" *ngIf="searchTerm">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="filters">
+      <label class="filter-item">
+        <span>From</span>
+        <input type="datetime-local" [(ngModel)]="fromDate" (change)="applyFilters()" />
+      </label>
+
+      <label class="filter-item">
+        <span>To</span>
+        <input type="datetime-local" [(ngModel)]="toDate" (change)="applyFilters()" />
+      </label>
+
+      <button class="btn ghost" type="button" (click)="clearFilters()" *ngIf="fromDate || toDate">
+        <i class="bi bi-eraser"></i> Clear
+      </button>
+    </div>
+  </section>
+
+  <!-- Add / Edit form -->
+<section class="composer">
+  <h2 *ngIf="!editingId">Add Note</h2>
+  <h2 *ngIf="editingId">Edit Note</h2>
+
+  <div class="composer-box">
+    <!-- Voice toolbar (English only) -->
+    <div class="composer-toolbar">
+      <div class="voice-controls">
+        <button type="button"
+                class="icon-btn mic-btn"
+                [class.recording]="isRecording"
+                (click)="toggleVoice()"
+                [disabled]="!speechAvailable">
+          <i class="bi" [ngClass]="isRecording ? 'bi-mic-mute-fill' : 'bi-mic-fill'"></i>
+          <span class="label">{{ isRecording ? 'Stop' : 'Speak' }}</span>
+        </button>
+        <span class="listening-dot" *ngIf="isRecording"></span>
+      </div>
+
+      <small class="speech-note" *ngIf="!speechAvailable">
+        Voice input not supported in this browser.
+      </small>
+    </div>
+
+    <textarea
+      [(ngModel)]="draftText"
+      name="draftText"
+      placeholder="Type your note… (Speak or type. Enter=save, Shift+Enter=new line)"
+      rows="4"
+      (keydown.enter)="onEnterCompose($event)"
+    ></textarea>
+
+    <!-- Live interim transcript -->
+    <div class="interim" *ngIf="interimTranscript && isRecording">
+      <i class="bi bi-soundwave"></i>
+      <span>{{ interimTranscript }}</span>
+    </div>
+
+    <div class="composer-actions">
+      <div class="meta">
+        <small *ngIf="editingId">
+          Editing • Last updated: {{ lastEditDisplay }}
+        </small>
+      </div>
+
+      <div class="buttons">
+        <button class="btn" type="button" (click)="saveNote()" [disabled]="!draftText.trim()">
+          <i class="bi bi-save"></i> {{ editingId ? 'Update' : 'Add' }}
+        </button>
+        <button class="btn outline" type="button" (click)="cancelEdit()" *ngIf="editingId">
+          <i class="bi bi-x-circle"></i> Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+  <!-- Notes list -->
+  <section class="notes-list" *ngIf="filtered.length; else emptyState">
+    <article class="note-card" *ngFor="let n of filtered; trackBy: trackById">
+      <div class="note-text">{{ n.text }}</div>
+
+      <div class="note-meta">
+        <small>Created: {{ n.createdAt | date:'medium' }}</small>
+        <small *ngIf="n.updatedAt !== n.createdAt">Updated: {{ n.updatedAt | date:'medium' }}</small>
+      </div>
+
+      <div class="note-actions">
+        <button class="icon-btn" (click)="beginEdit(n)" title="Edit">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button class="icon-btn danger" (click)="deleteNote(n.id)" title="Delete">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </article>
+  </section>
+
+  <ng-template #emptyState>
+    <div class="empty">
+      <i class="bi bi-journal-x"></i>
+      <p>No notes match your filters.</p>
+    </div>
+  </ng-template>
+</div>
